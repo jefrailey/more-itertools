@@ -5,10 +5,28 @@ from itertools import izip_longest
 from recipes import *
 
 __all__ = ['chunked', 'first', 'peekable', 'collate', 'consumer', 'ilen',
-           'iterate', 'with_iter', 'one', 'distinct_permutations']
+           'iterate', 'with_iter', 'one', 'distinct_permutations', 'sliced']
 
 
 _marker = object()
+
+
+def sliced(sliceable, slicelen):
+    """Break a sliceable into lists of a given length::
+
+        >>> list(sliced([1, 2, 3, 4, 5, 6, 7], 3))
+        [[1, 2, 3], [4, 5, 6], [7]]
+
+    If the length of ``iterable`` is not evenly divisible by ``n``, the last
+    returned list will be shorter.
+    """
+    start = 0
+    while True:
+        slice = [s for s in sliceable[start:start+slicelen]]
+        if not slice:
+            break
+        yield slice
+        start += slicelen
 
 
 def chunked(iterable, n):
