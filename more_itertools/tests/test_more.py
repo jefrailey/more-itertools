@@ -8,6 +8,21 @@ from nose.tools import eq_, assert_raises
 from more_itertools import *  # Test all the symbols are in __all__.
 
 
+class SlicedTests(TestCase):
+    """Tests for ``sliced()``"""
+
+    def test_even(self):
+        """Test when ``n`` divides evenly into the length of the sliceable."""
+        eq_(list(sliced('ABCDEF', 3)), [['A', 'B', 'C'], ['D', 'E', 'F']])
+
+    def test_odd(self):
+        """Test when ``n`` does not divide evenly into the length of the
+        sliceable.
+
+        """
+        eq_(list(sliced('ABCDE', 3)), [['A', 'B', 'C'], ['D', 'E']])
+
+
 class CollateTests(TestCase):
     """Unit tests for ``collate()``"""
     # Also accidentally tests peekable, though that could use its own tests
